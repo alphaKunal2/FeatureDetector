@@ -2,7 +2,7 @@
 
 
 ![Open Source Love](https://img.shields.io/badge/Open%20Source-%E2%9D%A4-red.svg)
-![GitHub](https://img.shields.io/github/license/alphaKunal2/FeatureDetector.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![GitHub forks](https://img.shields.io/github/forks/alphaKunal2/FeatureDetector.svg)
 ![GitHub issues](https://img.shields.io/github/issues/alphaKunal2/FeatureDetector.svg)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr/alphaKunal2/FeatureDetector.svg)
