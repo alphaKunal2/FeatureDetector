@@ -3,6 +3,7 @@ import cv2 as cv
 from filters.hough import Hough_Transform
 from filters.lbp import LBP_Kernel
 from filters.discrete_cosine import discrete_cosine_transform
+from filters.gabor import Gabor
 
 if __name__ == '__main__':
     path = r'C:\Users\Vanshaj\Desktop\Thapar data\Sem 5\Edge AI\Project\filters\car.jpg'
