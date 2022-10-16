@@ -5,7 +5,7 @@ from matplotlib import pyplot as plt
 import math
 
 
-def fftHPF(path):
+def fftLPF(path):
     img = cv2.imread(path,0)
 
     dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
