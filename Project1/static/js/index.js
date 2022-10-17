@@ -29,7 +29,7 @@ function onFileSelected(event) {
         image_data = (imgtag.src.split(',')[1]);
         
 
-        // console.log(imgtag.src);
+        console.log(imgtag.src,image_data);
         // var x = document.getElementById("inputfile").value;
         //   console.log(x);
         $("#imgData")[0].value = image_data;
@@ -144,5 +144,17 @@ document.body.removeChild(a);
 window.addEventListener("load",(event) =>{
     let url = window.location.pathname;
     $("#imgForm").attr("action",url)
+    var base64 = $("#outputImageDisplay").attr("src");
+    console.log(base64);
+    if(base64 == 'null')
+    {
+        $("#outputImageDisplay").attr("src",'');
+    }
+    else{
+        var imgSrc = "data:image/jpg;base64,"+ base64.slice(2,).slice(0,-1);
+    $("#outputImageDisplay").attr("src",imgSrc);
+    }
+    
+    
     
 });

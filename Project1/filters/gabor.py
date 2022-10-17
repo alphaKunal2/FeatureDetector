@@ -11,13 +11,13 @@ import os
 # psi - phase offset
 # ktype - type and range of values that each pixel in the gabor kernel can hold
 
-def Gabor(path):
+def Gabor(img):
     g_kernel = cv2.getGaborKernel((21, 21), 8.0, np.pi/4, 10.0, 0.5, 0, ktype=cv2.CV_32F)
     
     
-    path = path.replace(os.sep, '/')
     
-    img = cv2.imread(path)
+    
+    
     
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     filtered_img = cv2.filter2D(img, cv2.CV_8UC3, g_kernel)
