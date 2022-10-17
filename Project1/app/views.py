@@ -1,7 +1,6 @@
-from cmath import e
 import re
 from django.shortcuts import render,redirect
-from filters import gabor
+from filters import gabor,discrete_cosine,hough,lbp
 from django.http import HttpResponse
 from django.views import View
 import base64
@@ -30,25 +29,32 @@ def toString(img):
     
     return im_b64
 
-def filter_view(request,num):
+def filter_view(request,num=0):
     nums = [1,2,3,4,5,6]
     if(num in nums):
         if(request.method == 'GET'):
                 return render(request,'filter.html',{"outputImg":'null'})
         if(request.method == 'POST'):
-            if(True):
                 img = request.POST.get('img')
+                img = stringToCv2(img)
                 
-                cv2img = stringToCv2(img)
-                print(cv2img.shape)
-                new_img = gabor.Gabor(cv2img)
-                print(toString(new_img))
-                return render(request,'filter.html',{"outputImg":toString(new_img)})
-            # elif(num==2):
-            # elif(num==3):
-            # elif(num==4):
+             
+            new_img = 'null'
+            if(num==1):
+                print(img)
+                new_img = discrete_cosine.discrete_cosine_transform(img)
+                print(len(new_img))
+            elif(num==2):
+                new_img = gabor.Gabor(img)
+            elif(num==3):
+                new_img = hough.Hough_Transform(img)
+            elif(num==4):
+                new_img = lbp.LBP_Kernel(img)
+  
             # elif(num==5):
             # elif(num==6):
+            
+            return render(request,'filter.html',{"outputImg":toString(new_img)})
     else:
         return redirect(home)
     
