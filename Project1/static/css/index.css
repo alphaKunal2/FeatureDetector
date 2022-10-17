@@ -74,6 +74,10 @@
         border-style: solid;
         
       }
+      #outputImageDisplay
+      {
+        border-style: solid;;
+      }
       
       .navbar-brand{
         background: rgb(54, 224, 24);
