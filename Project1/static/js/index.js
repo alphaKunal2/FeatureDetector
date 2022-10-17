@@ -1,12 +1,4 @@
-jQuery(function($) {
-    var path = window.location.href; 
-    // because the 'href' property of the DOM element is the absolute path
-    $('ul a').each(function() {
-      if (this.href === path) {
-        $(this).addClass('active');
-      }
-    });
-  });
+
 
   $(function($) {
     let url = window.location.href;
@@ -26,24 +18,25 @@ function fileinput() {
 
 function onFileSelected(event) {
     var selectedFile = event.target.files[0];
-    console.log($("#inputfile")[0].files);
+    // console.log($("#inputfile")[0].files);
     var reader = new FileReader();
 
     var imgtag = document.getElementById("inputImageDisplay");
     imgtag.title = selectedFile.name;
-
+    let image_data = "ok";
     reader.onload = function (event) {
         imgtag.src = event.target.result;
-        var image_data = (imgtag.src.split(',')[1]);
-        console.log(image_data);
+        image_data = (imgtag.src.split(',')[1]);
+        
 
         // console.log(imgtag.src);
         // var x = document.getElementById("inputfile").value;
         //   console.log(x);
-        
+        $("#imgData")[0].value = image_data;
     };
-
+    // console.log(image_data);
     reader.readAsDataURL(selectedFile);
+    
 }
 
 
@@ -146,4 +139,10 @@ a.click();
 document.body.removeChild(a);
     // location.href = url; // <-- Download!
 
+});
+
+window.addEventListener("load",(event) =>{
+    let url = window.location.pathname;
+    $("#imgForm").attr("action",url)
+    
 });

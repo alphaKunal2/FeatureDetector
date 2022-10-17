@@ -1,7 +1,7 @@
 from cmath import e
 import re
 from django.shortcuts import render,redirect
-import filters
+from filters import gabor
 from django.http import HttpResponse
 from django.views import View
 # Create your views here.
@@ -18,7 +18,9 @@ def filter_view(request,num):
         if(request.method == 'POST'):
             if(num==1):
                 img = request.POST.get('img')
-                new_img = filters.gabor.Gabor(img)
+
+                new_img = gabor.Gabor(img)
+                print(len(new_img))
                 return render(request,'filter.html',{'img':new_img})
             # elif(num==2):
             # elif(num==3):
