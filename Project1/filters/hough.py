@@ -1,12 +1,10 @@
-
-
 import cv2 as cv
 import numpy as np
 
 
-def Hough_Transform(path):
+def Hough_Transform(img):
 
-    img = cv.imread(path)
+    # img = cv.imread(path)
     gray=cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     edges=cv.Canny(gray, 50, 150, apertureSize=3)
     lines=cv.HoughLines(edges, 1, np.pi/180, 200)

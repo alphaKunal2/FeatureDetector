@@ -9,9 +9,9 @@ def dct2(a):
     return dct(dct(a.T, norm='ortho').T, norm='ortho')
 
 
-def discrete_cosine_transform(path):
+def discrete_cosine_transform(img):
     
     # read lena RGB image and convert to grayscale
-    im = rgb2gray(imread(path)) 
+    im = rgb2gray(img) 
     imF = dct2(im)
     return imF

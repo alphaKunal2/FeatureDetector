@@ -76,9 +76,9 @@ def lbp_calculated_pixel(img, x, y):
 	return val
 
 
-
-def LBP_Kernel(path):
-    img_bgr = cv.imread(path, 1)
+@jit
+def LBP_Kernel(img):
+    img_bgr = img
 
     height, width, _ = img_bgr.shape
 
