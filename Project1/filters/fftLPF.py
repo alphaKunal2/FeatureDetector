@@ -42,3 +42,6 @@ def fft_low_pass_filter(img):
 
     return img_filtered
 
+
+
+

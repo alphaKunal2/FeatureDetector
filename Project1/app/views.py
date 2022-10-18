@@ -8,6 +8,7 @@ from PIL import Image
 import cv2
 import io
 import numpy as np
+import copy
 # Create your views here.
 
 def home(request):
@@ -37,6 +38,8 @@ def filter_view(request,num=0):
                 return render(request,'filter.html',{"inputImg":'null',"outputImg":'null'})
         if(request.method == 'POST'):
             img = request.POST.get('img')
+            
+            inputimg = 0
             new_img = 'null'
 
             if(img == ''):
@@ -44,10 +47,11 @@ def filter_view(request,num=0):
                 return render(request,'filter.html',{"inputImg":'null',"outputImg":'null'})
             else:
                 img = stringToCv2(img)
-
+                inputimg = copy.deepcopy(img)
+                
                 if(num==1):
                     new_img = discrete_cosine.discrete_cosine_transform(img)
-                    print(len(new_img))
+                    
                 elif(num==2):
                     new_img = gabor.Gabor(img)
                 elif(num==3):
@@ -58,7 +62,7 @@ def filter_view(request,num=0):
                     new_img = fftLPF.fft_low_pass_filter(img)
                 # elif(num==6):
             
-            return render(request,'filter.html',{"inputImg":toString(img),"outputImg":toString(new_img)})
+            return render(request,'filter.html',{"inputImg":toString(inputimg),"outputImg":toString(new_img)})
     else:
         return redirect(home)
     
