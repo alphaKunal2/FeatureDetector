@@ -1,6 +1,6 @@
-import re
+from django.contrib import messages
 from django.shortcuts import render,redirect
-from filters import gabor,discrete_cosine,hough,lbp
+from filters import gabor,discrete_cosine,hough,lbp,fftLPF
 from django.http import HttpResponse
 from django.views import View
 import base64
@@ -12,7 +12,8 @@ import numpy as np
 
 def home(request):
     if(request.method == 'GET'):
-        return render(request,'index.html')
+        # return render(request,'index.html')
+        return redirect('filter/1')
 def stringToCv2(base64_string):
     imgdata = base64.b64decode(base64_string)
     data =  Image.open(io.BytesIO(imgdata))
@@ -30,31 +31,34 @@ def toString(img):
     return im_b64
 
 def filter_view(request,num=0):
-    nums = [1,2,3,4,5,6]
+    nums = [1,2,3,4,5]
     if(num in nums):
         if(request.method == 'GET'):
                 return render(request,'filter.html',{"outputImg":'null'})
         if(request.method == 'POST'):
-                img = request.POST.get('img')
-                img = stringToCv2(img)
-                
-             
+            img = request.POST.get('img')
             new_img = 'null'
-            if(num==1):
-                print(img)
-                new_img = discrete_cosine.discrete_cosine_transform(img)
-                print(len(new_img))
-            elif(num==2):
-                new_img = gabor.Gabor(img)
-            elif(num==3):
-                new_img = hough.Hough_Transform(img)
-            elif(num==4):
-                new_img = lbp.LBP_Kernel(img)
-  
-            # elif(num==5):
-            # elif(num==6):
+
+            if(img == ''):
+                messages.error(request, 'Empty image provided')
+                return render(request,'filter.html')
+            else:
+                img = stringToCv2(img)
+
+                if(num==1):
+                    new_img = discrete_cosine.discrete_cosine_transform(img)
+                    print(len(new_img))
+                elif(num==2):
+                    new_img = gabor.Gabor(img)
+                elif(num==3):
+                    new_img = hough.Hough_Transform(img)
+                elif(num==4):
+                    new_img = lbp.LBP_Kernel(img)
+                elif(num==5):
+                    new_img = fftLPF.fft_low_pass_filter(img)
+                # elif(num==6):
             
-            return render(request,'filter.html',{"outputImg":toString(new_img)})
+            return render(request,'filter.html',{"inputImg":img,"outputImg":toString(new_img)})
     else:
         return redirect(home)
     

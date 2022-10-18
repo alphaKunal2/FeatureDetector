@@ -40,22 +40,6 @@ function onFileSelected(event) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-////////////////////////////////
-
 $("#downloadInputImage").click(() => {
     var a = document.createElement('a');
 
@@ -154,7 +138,4 @@ window.addEventListener("load",(event) =>{
         var imgSrc = "data:image/jpg;base64,"+ base64.slice(2,).slice(0,-1);
     $("#outputImageDisplay").attr("src",imgSrc);
     }
-    
-    
-    
 });
