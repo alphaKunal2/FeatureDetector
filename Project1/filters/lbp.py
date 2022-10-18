@@ -1,3 +1,4 @@
+from hashlib import new
 from numba import jit
 
 import cv2 as cv
@@ -10,30 +11,24 @@ if not sys.warnoptions:
     warnings.simplefilter("ignore")
     
     
-    
+@jit(nopython=True)
 def get_pixel(img, center, x, y):
 	
 	new_value = 0
 	
 	try:
-		# If local neighbourhood pixel
-		# value is greater than or equal
-		# to center pixel values then
-		# set it to 1
+
 		if img[x][y] >= center:
 			new_value = 1
 			
 	except:
-		# Exception is required when
-		# neighbourhood value of a center
-		# pixel value is null i.e. values
-		# present at boundaries.
+
 		pass
 	
 	return new_value
 
 # Function for calculating LBP
-@jit
+@jit(nopython=True)	
 def lbp_calculated_pixel(img, x, y):
 
 	center = img[x][y]
@@ -76,7 +71,6 @@ def lbp_calculated_pixel(img, x, y):
 	return val
 
 
-@jit
 def LBP_Kernel(img):
     img_bgr = img
 
@@ -86,7 +80,7 @@ def LBP_Kernel(img):
     # into gray one because gray
     # image has one channel only.
     img_gray = cv.cvtColor(img_bgr,
-                            cv.COLOR_BGR2GRAY)
+						cv.COLOR_BGR2GRAY)
 
     # Create a numpy array as
     # the same height and width
@@ -101,6 +95,3 @@ def LBP_Kernel(img):
 
     return img_lbp
     
-
-
-

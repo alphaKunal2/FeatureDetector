@@ -140,7 +140,6 @@ window.addEventListener("load",(event) =>{
     }
 
 
-    ///////////////
     //input image
    
     var base642 = $("#inputImageDisplay").attr("src");

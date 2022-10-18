@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block filtertitle %}{% endblock  %}</title>
+  <title>Filters</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
@@ -32,7 +32,7 @@
 
   <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
 
-    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-8" href="#">Feature Detector</a>
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-8" href="/">Feature Detector</a>
 
     <a class="text-center navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-8" onclick="fileinput(event)" href="#">Load
       image</a>
@@ -82,7 +82,14 @@
           <li class="nav-item filters">
             <a class="nav-link" href="5">
               <span data-feather="shopping-cart" class="align-text-bottom"></span>
-              FFT LPF Filter
+              FFT LP Filter
+            </a>
+          </li>
+
+          <li class="nav-item filters">
+            <a class="nav-link" href="6">
+              <span data-feather="shopping-cart" class="align-text-bottom"></span>
+              FFT HP Filter
             </a>
           </li>
 
@@ -93,7 +100,6 @@
               <input id="transform" class = "button-28" type="submit" value="Transform" />
             </form>
           </li>
-          
 
         </ul>
 
@@ -129,11 +135,6 @@
 
 
 
-  {% block bodyblock %}
-  {% endblock  %}
-
-
-
   <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
     integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous">
   </script>
@@ -152,6 +153,19 @@
         $('#msg').remove();
       }
     }, 2000)
+
+
+    // $('body').append('<div style="" id="loadingDiv"><div class="loader">Loading...</div></div>');
+    // $(window).on('load', function(){
+    //   setTimeout(removeLoader, 100); //wait for page load PLUS two seconds.
+    // });
+    // function removeLoader(){
+    //     $( "#loadingDiv" ).fadeOut(0, function() {
+    //       // fadeOut complete. Remove the loading div
+    //       $( "#loadingDiv" ).remove(); //makes page more lightweight 
+    //   });  
+    // }
+
   </script> 
 </body>
 
