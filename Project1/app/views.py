@@ -12,8 +12,8 @@ import numpy as np
 
 def home(request):
     if(request.method == 'GET'):
-        # return render(request,'index.html')
-        return redirect('filter/1')
+        return render(request,'home.html')
+    
 def stringToCv2(base64_string):
     imgdata = base64.b64decode(base64_string)
     data =  Image.open(io.BytesIO(imgdata))

@@ -1,35 +1,44 @@
 import numpy as np
 import cv2
 from matplotlib import pyplot as plt
-import math
 
+import numpy as np
+import cv2
 
 def fft_low_pass_filter(img):
-    img = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+    # do dft saving as complex output
+    dft = np.fft.fft2(img, axes=(0,1))
 
-    dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
+    # apply shift of origin to center of image
     dft_shift = np.fft.fftshift(dft)
 
-    # magnitude_spectrum = 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
+    # generate spectrum from magnitude image (for viewing only)
+    mag = np.abs(dft_shift)
+    spec = np.log(mag) / 20
+
+    # create circle mask
+    radius = 32
+    mask = np.zeros_like(img)
+    cy = mask.shape[0] // 2
+    cx = mask.shape[1] // 2
+    cv2.circle(mask, (cx,cy), radius, (255,255,255), -1)[0]
+
+    # apply mask to dft_shift
+    dft_shift_masked = np.multiply(dft_shift,mask) / 255
 
 
 
-    rows, cols = img.shape
-    crow,ccol = math.ceil(rows/2) , math.ceil(cols/2)
-
-    # create a mask first, center square is 1, remaining all zeros
-    mask = np.zeros((rows,cols,2),np.uint8)
-    mask[crow-30:crow+30, ccol-30:ccol+30] = 1
-
-    # apply mask and inverse DFT
-    fshift = dft_shift*mask
-    f_ishift = np.fft.ifftshift(fshift)
-    img_back = cv2.idft(f_ishift)
-    img_back = cv2.magnitude(img_back[:,:,0],img_back[:,:,1])
+    # shift origin from center to upper left corner
+    back_ishift_masked = np.fft.ifftshift(dft_shift_masked)
 
 
+    # do idft saving as complex output
+    img_filtered = np.fft.ifft2(back_ishift_masked, axes=(0,1))
+
+    # combine complex real and imaginary components to form (the magnitude for) the original image again
+    img_filtered = np.abs(img_filtered).clip(0,255).astype(np.uint8)
 
     # cv2.normalize(img_back, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
 
-    return img_back
+    return img_filtered
 
