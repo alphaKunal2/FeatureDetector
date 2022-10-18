@@ -88,7 +88,7 @@ $("#downloadOutputImage").click(() => {
 
 
     
-    var img = document.getElementById("inputImageDisplay");
+    var img = document.getElementById("outputImageDisplay");
 
     // atob to base64_decode the data-URI
     var image_data = atob(img.src.split(',')[1]);
@@ -132,10 +132,25 @@ window.addEventListener("load",(event) =>{
     console.log(base64);
     if(base64 == 'null')
     {
-        $("#outputImageDisplay").attr("src",'');
+        $("#outputImageDisplay").attr("src",'https://flevix.com/wp-content/uploads/2019/07/Curve-Loading.gif');
     }
     else{
         var imgSrc = "data:image/jpg;base64,"+ base64.slice(2,).slice(0,-1);
     $("#outputImageDisplay").attr("src",imgSrc);
+    }
+
+
+    ///////////////
+    //input image
+   
+    var base642 = $("#inputImageDisplay").attr("src");
+    console.log(base64);
+    if(base642 == 'null')
+    {
+        $("#inputImageDisplay").attr("src",'https://flevix.com/wp-content/uploads/2019/07/Curve-Loading.gif');
+    }
+    else{
+        var imgSrc = "data:image/jpg;base64,"+ base642.slice(2,).slice(0,-1);
+    $("#inputImageDisplay").attr("src",imgSrc);
     }
 });

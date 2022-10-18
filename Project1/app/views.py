@@ -34,14 +34,14 @@ def filter_view(request,num=0):
     nums = [1,2,3,4,5]
     if(num in nums):
         if(request.method == 'GET'):
-                return render(request,'filter.html',{"outputImg":'null'})
+                return render(request,'filter.html',{"inputImg":'null',"outputImg":'null'})
         if(request.method == 'POST'):
             img = request.POST.get('img')
             new_img = 'null'
 
             if(img == ''):
                 messages.error(request, 'Empty image provided')
-                return render(request,'filter.html')
+                return render(request,'filter.html',{"inputImg":'null',"outputImg":'null'})
             else:
                 img = stringToCv2(img)
 
@@ -58,7 +58,7 @@ def filter_view(request,num=0):
                     new_img = fftLPF.fft_low_pass_filter(img)
                 # elif(num==6):
             
-            return render(request,'filter.html',{"inputImg":img,"outputImg":toString(new_img)})
+            return render(request,'filter.html',{"inputImg":toString(img),"outputImg":toString(new_img)})
     else:
         return redirect(home)
     
