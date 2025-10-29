@@ -45,6 +45,6 @@ if __name__ == "__main__":
 
     query = sys.argv[1]
     image_path = sys.argv[2]
-    load_key(sys.argv[2])
+    load_key(sys.argv[3])
     llm = get_llm()
     process_image(query, image_path)
