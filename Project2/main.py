@@ -2,6 +2,7 @@
 main.py - Entry point for LLM-RAG Image Filter Project
 """
 
+import importlib
 import sys
 import json
 import os
@@ -28,6 +29,26 @@ def get_llm():
     )
 
 
+def get_filter_module(selected_filter: str):
+    filter_module_name = selected_filter.replace(".py", "")
+    parent_dir = os.path.dirname(os.path.abspath(__file__))
+    sys.path.append(os.path.join(parent_dir, ".."))
+
+    try:
+        module = importlib.import_module(f"filters.{filter_module_name}")
+    except ModuleNotFoundError:
+        print(f"❌ Error: Filter module '{selected_filter}' not found in ../filters/")
+        sys.exit(1)
+
+    if hasattr(module, "apply_filter"):
+        output_image = module.apply_filter(image_path)
+        print(f"✅ Filter applied successfully! Output saved at: {output_image}")
+    else:
+        print(
+            f"⚠️ The module '{selected_filter}' does not have an 'apply_filter' function."
+        )
+
+
 def process_image(query: str, image_path: str, llm: ChatOpenAI) -> str:
     """Processes the image based on query intent."""
     print(f"[INFO] Received query: {query}")
@@ -41,7 +62,10 @@ def process_image(query: str, image_path: str, llm: ChatOpenAI) -> str:
 
     # Step 2: Retrieve background info (via RAG mock)
     relevant_filter = get_filter_from_context(context_for_query, llm)
+    print(f"🧠 LLM selected filter: {relevant_filter}")
+
     # Step 3: Apply the filter and return result
+    filter_module = get_filter_module(relevant_filter)
     return ""
 
 
