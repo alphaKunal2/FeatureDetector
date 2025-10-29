@@ -7,6 +7,7 @@ import json
 import os
 from langchain_openai import ChatOpenAI
 from .vector import get_retriever
+from .curator.filter_curator import get_filter_from_context
 
 
 def load_key(file_name: str):
@@ -39,7 +40,7 @@ def process_image(query: str, image_path: str, llm: ChatOpenAI) -> str:
     print(f"[INFO] Context for query: {context_for_query}")
 
     # Step 2: Retrieve background info (via RAG mock)
-
+    relevant_filter = get_filter_from_context(context_for_query, llm)
     # Step 3: Apply the filter and return result
     return ""
 
