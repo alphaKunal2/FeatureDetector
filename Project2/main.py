@@ -6,6 +6,7 @@ import sys
 import json
 import os
 from langchain_openai import ChatOpenAI
+from .vector import get_retriever
 
 
 def load_key(file_name: str):
@@ -26,11 +27,16 @@ def get_llm():
     )
 
 
-def process_image(query: str, image_path: str) -> str:
+def process_image(query: str, image_path: str, llm: ChatOpenAI) -> str:
     """Processes the image based on query intent."""
     print(f"[INFO] Received query: {query}")
 
     # Step 1: Interpret query
+    retriever = get_retriever()
+    relevant_document_chunks = retriever.get_relevant_documents(query)
+    context_list = [d.page_content for d in relevant_document_chunks]
+    context_for_query = ". ".join(context_list)
+    print(f"[INFO] Context for query: {context_for_query}")
 
     # Step 2: Retrieve background info (via RAG mock)
 
@@ -47,4 +53,4 @@ if __name__ == "__main__":
     image_path = sys.argv[2]
     load_key(sys.argv[3])
     llm = get_llm()
-    process_image(query, image_path)
+    process_image(query, image_path, llm)
