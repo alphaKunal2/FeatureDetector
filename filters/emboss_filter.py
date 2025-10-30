@@ -4,6 +4,7 @@ from scipy.ndimage import convolve
 import matplotlib.pylab as plt
 import numpy as np
 
+
 def emboss_filter(img):
     """
     Apply an emboss filter to a grayscale version of the input image.
@@ -11,11 +12,7 @@ def emboss_filter(img):
     im_gray = rgb2gray(img)
 
     # Emboss kernel (you can rotate it to change light direction)
-    kernel = np.array([
-        [-2, -1,  0],
-        [-1,  1,  1],
-        [ 0,  1,  2]
-    ])
+    kernel = np.array([[-2, -1, 0], [-1, 1, 1], [0, 1, 2]])
 
     # Apply convolution
     embossed = convolve(im_gray, kernel)
@@ -23,4 +20,4 @@ def emboss_filter(img):
     # Normalize to displayable range [0, 1]
     embossed = (embossed - embossed.min()) / (embossed.max() - embossed.min())
 
-    return im_gray, embossed
+    return embossed

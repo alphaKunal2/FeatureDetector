@@ -1,0 +1,180 @@
+===========================
+🖼️ IMAGE FILTERS OVERVIEW
+===========================
+
+This document explains the purpose and common use cases of each image filter
+implemented in the project. These filters enhance, stylize, or analyze images
+for different creative and technical applications.
+
+------------------------------------------------------
+1️⃣  DISCRETE COSINE TRANSFORM (discrete_cosine.py)
+------------------------------------------------------
+The Discrete Cosine Transform (DCT) filter is widely used for image compression
+and frequency analysis. It converts spatial image data into frequency components,
+making it easier to identify dominant visual patterns and remove less important data.
+
+🧠 Use Cases:
+- Image compression (e.g., JPEG)
+- Frequency domain filtering
+- Noise reduction by removing high-frequency components
+- Texture analysis
+
+------------------------------------------------------
+2️⃣  EMBOSS FILTER (emboss_filter.py)
+------------------------------------------------------
+The emboss filter gives the image a 3D relief effect by highlighting edges and
+simulating light falling on the surface. It makes the image appear as if it’s
+engraved or raised from the background.
+
+🎨 Use Cases:
+- Stylized 3D artistic effects
+- Texture enhancement for objects
+- Edge highlighting with depth perception
+
+------------------------------------------------------
+3️⃣  FAST FOURIER TRANSFORM - HIGH PASS FILTER (fftHPF.py)
+------------------------------------------------------
+The FFT High-Pass Filter removes low-frequency components (smooth areas) and
+preserves high-frequency details (edges and fine structures). The result is a
+sharper, more detailed image emphasizing transitions and boundaries.
+
+🔬 Use Cases:
+- Sharpening and edge detection
+- Highlighting fine details
+- Frequency-based image analysis
+- Enhancing textures in microscopy or satellite images
+
+------------------------------------------------------
+4️⃣  FAST FOURIER TRANSFORM - LOW PASS FILTER (fftLPF.py)
+------------------------------------------------------
+The FFT Low-Pass Filter smooths images by eliminating high-frequency noise and
+retaining low-frequency components. This produces a blurred effect that reduces
+details and softens textures.
+
+🌫️ Use Cases:
+- Image denoising
+- Background smoothing
+- Preprocessing before edge detection
+- Reducing artifacts in scanned or compressed images
+
+------------------------------------------------------
+5️⃣  GABOR FILTER (gabor.py)
+------------------------------------------------------
+Gabor filters are powerful tools for texture analysis and feature extraction.
+They respond strongly to edges, lines, and patterns at specific orientations
+and frequencies.
+
+🧩 Use Cases:
+- Texture classification (e.g., fabric, fingerprint recognition)
+- Edge and line detection
+- Feature extraction for machine learning models
+- Biological image analysis
+
+------------------------------------------------------
+6️⃣  GAUSSIAN BLUR (gaussian_blur.py)
+------------------------------------------------------
+The Gaussian blur applies a weighted average of pixel values to soften an image.
+It’s one of the most common smoothing techniques used in image processing.
+
+🌄 Use Cases:
+- Noise reduction
+- Background defocus (bokeh simulation)
+- Preprocessing for edge detection
+- Artistic soft-focus effects
+
+------------------------------------------------------
+7️⃣  HOUGH TRANSFORM (hough.py)
+------------------------------------------------------
+The Hough Transform detects geometric shapes, especially lines and circles, within images.
+It is commonly used in computer vision applications that involve detecting structured patterns.
+
+📐 Use Cases:
+- Line detection (e.g., roads, edges of buildings)
+- Circle detection (e.g., coins, wheels)
+- Object recognition
+- Lane detection in self-driving systems
+
+------------------------------------------------------
+8️⃣  LOCAL BINARY PATTERN (lbp.py)
+------------------------------------------------------
+Local Binary Patterns (LBP) capture local texture information by comparing pixel
+intensities within a neighborhood. The result is a texture descriptor that’s robust
+against lighting variations.
+
+🧠 Use Cases:
+- Texture and surface analysis
+- Facial recognition
+- Image classification and pattern recognition
+- Surface defect detection in industrial images
+
+------------------------------------------------------
+9️⃣  MOSAIC TILE FILTER (mosaic_tile_filter.py)
+------------------------------------------------------
+The mosaic tile filter divides an image into square or hexagonal tiles and replaces
+each with an averaged color. The result resembles a digital mosaic or pixelated artwork.
+
+🎨 Use Cases:
+- Pixelation effects for privacy or style
+- Abstract art generation
+- Background simplification
+- Visual data anonymization
+
+------------------------------------------------------
+🔟  PENCIL ART FILTER (pencil_art.py)
+------------------------------------------------------
+The pencil art filter simulates hand-drawn sketch effects, converting photos into
+pencil-style grayscale drawings with line-based shading.
+
+✏️ Use Cases:
+- Artistic photo stylization
+- Portrait sketch effects
+- Outline generation for illustration
+- Comic or animation preprocessing
+
+------------------------------------------------------
+1️⃣1️⃣  RETRO FILTER (retro_filter.py)
+------------------------------------------------------
+The retro filter adds vintage-style color tones, fades, and grain effects to give
+images an aged look reminiscent of old film photography.
+
+📸 Use Cases:
+- Vintage or nostalgic image styling
+- Film or photo filter simulation
+- Thematic social media filters
+- Artistic storytelling aesthetics
+
+------------------------------------------------------
+1️⃣2️⃣  WATERCOLOR FILTER (watercolor_filter.py)
+------------------------------------------------------
+The watercolor filter produces a soft, painterly appearance by smoothing color
+transitions and enhancing edges to resemble watercolor paintings.
+
+🎨 Use Cases:
+- Artistic image stylization
+- Poster and print design
+- Scene abstraction
+- Background generation for visual media
+
+------------------------------------------------------
+📘 SUMMARY
+------------------------------------------------------
+| Filter Name            | Primary Effect                  | Common Use Case                         |
+|-------------------------|---------------------------------|------------------------------------------|
+| Discrete Cosine         | Frequency transformation        | Compression, pattern analysis            |
+| Emboss                  | 3D edge relief                  | Texture styling                          |
+| FFT High Pass           | Sharpens / enhances details     | Edge detection                           |
+| FFT Low Pass            | Smoothens / blurs image         | Noise reduction                          |
+| Gabor                   | Directional texture extraction  | ML feature extraction                    |
+| Gaussian Blur           | Softens image                   | Preprocessing, background defocus        |
+| Hough                   | Detects lines/circles           | Object detection                         |
+| LBP                     | Texture descriptor              | Face recognition, surface analysis       |
+| Mosaic Tile             | Pixelation effect               | Art, anonymization                       |
+| Pencil Art              | Sketch-like drawing             | Artistic rendering                       |
+| Retro Filter            | Vintage tone                    | Nostalgic visual effects                 |
+| Watercolor Filter       | Painterly style                 | Stylized imagery                         |
+
+------------------------------------------------------
+🧠 Note:
+These filters can be combined sequentially or conditionally
+using LLM-driven orchestration to generate context-aware
+artistic or analytical image transformations.

@@ -6,12 +6,10 @@ import matplotlib.pylab as plt
 
 
 def dct2(a):
-    return dct(dct(a.T, norm='ortho').T, norm='ortho')
+    return dct(dct(a.T, norm="ortho").T, norm="ortho")
 
 
 def discrete_cosine_transform(img):
-    
-    
-    im = rgb2gray(img) 
+    im = rgb2gray(img)
     imF = dct2(im)
     return imF

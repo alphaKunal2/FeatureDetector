@@ -7,6 +7,7 @@ import numpy as np
 from skimage.util import img_as_ubyte
 from sklearn.cluster import KMeans
 
+
 def watercolor_filter(img, sigma_smooth=1.5, n_colors=16, edge_strength=0.8):
     """
     Create a watercolor effect from an image.
@@ -42,4 +43,4 @@ def watercolor_filter(img, sigma_smooth=1.5, n_colors=16, edge_strength=0.8):
     # Step 4: Blend edges back into color image
     watercolor = quantized * edge[..., np.newaxis] ** edge_strength
 
-    return img, watercolor
+    return watercolor
