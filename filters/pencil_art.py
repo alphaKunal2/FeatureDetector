@@ -4,6 +4,7 @@ from scipy.ndimage import gaussian_filter
 import matplotlib.pylab as plt
 import numpy as np
 
+
 def pencil_art_filter(img, sigma_blur=5, blend_strength=0.8):
     """
     Convert an image into a pencil sketch effect.
@@ -29,4 +30,4 @@ def pencil_art_filter(img, sigma_blur=5, blend_strength=0.8):
     sketch = im_gray / (1 - blend_strength * blurred + 1e-5)
     sketch = np.clip(sketch, 0, 1)
 
-    return im_gray, sketch
+    return sketch

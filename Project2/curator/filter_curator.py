@@ -1,8 +1,10 @@
 from langchain_core.prompts import PromptTemplate
-from langchain_core.chains import LLMChain
+from langchain.chains.llm import LLMChain
+from typing import Any
+from langchain_core.runnables import Runnable
 
 
-def get_filter_from_context(context_for_query: str, llm):
+def get_filter_from_context(context_for_query: str, query: str, llm: Any):
     """
     Given context (descriptions of available filters) and a query,
     returns the most relevant filter filename using the LLM.

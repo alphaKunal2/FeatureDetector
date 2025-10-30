@@ -2,13 +2,18 @@
 main.py - Entry point for LLM-RAG Image Filter Project
 """
 
-import importlib
 import sys
 import json
 import os
 from langchain_openai import ChatOpenAI
-from .vector import get_retriever
-from .curator.filter_curator import get_filter_from_context
+from vector import get_retriever
+from curator.filter_curator import get_filter_from_context
+import matplotlib.pyplot as plt
+
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(os.path.join(parent_dir))
+
+from filters import apply_filter
 
 
 def load_key(file_name: str):
@@ -27,26 +32,27 @@ def get_llm():
         frequency_penalty=1.2,
         stop_sequences=["INST"],
     )
+    return llm
 
 
-def get_filter_module(selected_filter: str):
-    filter_module_name = selected_filter.replace(".py", "")
-    parent_dir = os.path.dirname(os.path.abspath(__file__))
-    sys.path.append(os.path.join(parent_dir, ".."))
+def get_filter_module(image_path: str, selected_filter: str):
+    """
+    Dynamically apply a filter from the filters package.
 
+    Args:
+        image_path (str): Path to the input image.
+        selected_filter (str): Name of the filter to apply.
+
+    Returns:
+        numpy.ndarray or None: Filtered image or None if failed.
+    """
     try:
-        module = importlib.import_module(f"filters.{filter_module_name}")
-    except ModuleNotFoundError:
-        print(f"❌ Error: Filter module '{selected_filter}' not found in ../filters/")
-        sys.exit(1)
-
-    if hasattr(module, "apply_filter"):
-        output_image = module.apply_filter(image_path)
-        print(f"✅ Filter applied successfully! Output saved at: {output_image}")
-    else:
-        print(
-            f"⚠️ The module '{selected_filter}' does not have an 'apply_filter' function."
-        )
+        output_image = apply_filter(selected_filter, image_path)
+        print("✅ Filter applied successfully!")
+        return output_image
+    except Exception as e:
+        print(f"⚠️ Failed to apply filter '{selected_filter}': {e}")
+        return None
 
 
 def process_image(query: str, image_path: str, llm: ChatOpenAI) -> str:
@@ -58,15 +64,27 @@ def process_image(query: str, image_path: str, llm: ChatOpenAI) -> str:
     relevant_document_chunks = retriever.get_relevant_documents(query)
     context_list = [d.page_content for d in relevant_document_chunks]
     context_for_query = ". ".join(context_list)
-    print(f"[INFO] Context for query: {context_for_query}")
 
     # Step 2: Retrieve background info (via RAG mock)
-    relevant_filter = get_filter_from_context(context_for_query, llm)
+    relevant_filter = get_filter_from_context(context_for_query, query, llm)
     print(f"🧠 LLM selected filter: {relevant_filter}")
 
     # Step 3: Apply the filter and return result
-    filter_module = get_filter_module(relevant_filter)
-    return ""
+    filtered_image = get_filter_module(image_path, relevant_filter)
+    output_dir = os.path.join(parent_dir, "outputs")
+    os.makedirs(output_dir, exist_ok=True)
+
+    # Define output path
+    base_name = os.path.splitext(os.path.basename(image_path))[0]
+    output_path = os.path.join(output_dir, f"{base_name}_{relevant_filter}.jpg")
+
+    # Save the image
+    plt.imsave(output_path, filtered_image, cmap="gray")
+
+    print(
+        f"✅ Filter '{relevant_filter}' applied successfully! Saved at: {output_path}"
+    )
+    return output_path
 
 
 if __name__ == "__main__":
@@ -78,4 +96,7 @@ if __name__ == "__main__":
     image_path = sys.argv[2]
     load_key(sys.argv[3])
     llm = get_llm()
-    process_image(query, image_path, llm)
+    if llm:
+        process_image(query, image_path, llm)
+    else:
+        print("Failed to initialize LLM. Exiting.")

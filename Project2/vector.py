@@ -1,14 +1,14 @@
-from langchain.embeddings import OpenAIEmbeddings
-from langchain.vectorstores import Chroma
+from langchain_community.embeddings import OpenAIEmbeddings
+from langchain_community.vectorstores import Chroma
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import TextLoader
 
 
 def get_retriever(
     embedding_model_name: str = "text-embedding-ada-002",
-    collection_name: str = "default_collection",
+    collection_name: str = "filters",
     search_type: str = "similarity",
-    k: int = 10,
+    k: int = 3,
 ):
     """
     Creates and returns a retriever object using the given documents and embedding model.
@@ -53,7 +53,7 @@ def get_chunks():
 
     # Define the text splitter (same as before)
     text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
-        encoding_name="cl100k_base", chunk_size=512, chunk_overlap=16
+        encoding_name="cl100k_base", chunk_size=20, chunk_overlap=16
     )
 
     # Load and split into chunks
